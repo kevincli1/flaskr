@@ -11,8 +11,7 @@ RUN apk add --no-cache --virtual .build-deps gcc musl-dev \
 ARG CACHEBUST=no
 COPY flaskr flaskr
 COPY migrations migrations
-COPY instance/config.py instance/config.py
-COPY boot.sh ./
+COPY config.py boot.sh ./
 RUN chmod +x boot.sh
 
 ENV FLASK_APP flaskr
