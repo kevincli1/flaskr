@@ -1,0 +1,46 @@
+version: '3'
+services:
+  db:
+    image: mysql/mysql-server:5.7
+    restart: on-failure
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=flaskr
+      - MYSQL_USER=flaskr
+      - MYSQL_PASSWORD=flaskr
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - backend
+
+  app:
+    image: flaskr:latest
+    restart: on-failure  
+    environment:
+      - DATABASE_URL=mysql+pymysql://flaskr:flaskr@db/flaskr
+      - DATABASE_MIGRATE=0    
+    depends_on:
+      - db
+    networks:
+      - frontend
+      - backend
+
+  proxy:
+    image: nginx:1.16.1-alpine
+    restart: on-failure    
+    depends_on:
+      - app
+    volumes:
+      - c:\ProgramData\nginx\nginx.conf:/etc/nginx/conf.d/default.conf
+      - c:\ProgramData\nginx\static:/usr/app/static
+    ports:
+      - 80:80
+    networks:
+      - frontend
+
+volumes:
+  dbdata:
+
+networks:
+  frontend:
+  backend: 
