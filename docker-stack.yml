@@ -18,7 +18,7 @@ services:
       - backend
 
   app:
-    image: flaskr:latest    
+    image: kevincli/flaskr:latest    
     environment:
       - DATABASE_URL=mysql+pymysql://flaskr:flaskr@db/flaskr
       - DATABASE_MIGRATE=0    
