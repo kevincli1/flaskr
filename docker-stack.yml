@@ -44,15 +44,15 @@ services:
       restart_policy: 
         condition: on-failure
         delay: 20s
+    configs:
+      - source: proxy_config
+        target: /etc/nginx/conf.d/default.conf
+        mode: 0444
     volumes:     
       - type: volume
         source: webstatic
         target: /usr/app/static
-        read_only: true
-      - type: volume
-        source: proxyconf
-        target: /etc/nginx/conf.d
-        read_only: true
+        read_only: true    
     ports:
       - "80:80"
     networks:
@@ -60,8 +60,11 @@ services:
 
 volumes:
   dbdata:
-  proxyconf:
   webstatic:
+  
+configs:
+  proxy_config:
+     external: true
 
 networks:
   frontend:
