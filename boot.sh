@@ -1,7 +1,9 @@
 #!/bin/sh
 # this script is used to boot a Docker container
 sleep 15
-if [[ "$DATABASE_MIGRATE" == '1' ]]; then
+if [[ "$DATABASE_MIGRATE" == '0' ]]; then
+	echo Skip DB deployment
+else
     while true; do
         flask db upgrade
         if [[ "$?" == "0" ]]; then
