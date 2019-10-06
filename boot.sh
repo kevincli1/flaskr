@@ -1,7 +1,7 @@
 #!/bin/sh
 # this script is used to boot a Docker container
 sleep 15
-if [[ "$DATABASE_MIGRATE" == '0' ]]; then
+if [ -z "$DATABASE_MIGRATE" ]; then
 	echo Skip DB deployment
 else
     while true; do
